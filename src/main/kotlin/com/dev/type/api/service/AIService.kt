@@ -13,11 +13,9 @@ class AIService(
     @Autowired private val cache: ConcurrentMap<String, List<String>>
 ) {
     suspend fun getWords(language: String): List<String> {
-        if (cache.containsKey(language)) return cache[language]!!
-
+        if (cache.containsKey(language)) return cache[language]?.shuffled()!!
         val words = aiClient.getWords(language)
         cache[language] = words
-        return words
-
+        return words.shuffled()
     }
 }

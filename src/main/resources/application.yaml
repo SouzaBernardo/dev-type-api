@@ -6,13 +6,12 @@ spring:
 
 client:
   ai:
-    prompt: "return a array with 200 registered words from %s language like this: [\"word1\", \"word2\", \"word3\"]. Just return the list in json with attribute words without ```json or any '\n' and remove all '\n' from the end of string."
+    prompt: "Return 200 words related to the %s programming language, in the following format: [\"word1\", \"word2\", \"word3\"]. Only return the list, without any explanations, code block formatting, or newlines at the end."
     default: "gemini"
     origins:
       gemini:
         url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=
         token: "AIzaSyAmZ03eC1nRzwEjGCgf9Vmpjtp7oYsJbq4"
-
 
 toggle:
   endpoints:

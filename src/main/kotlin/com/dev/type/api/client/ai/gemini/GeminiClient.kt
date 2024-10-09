@@ -28,9 +28,8 @@ class GeminiClient(
             .retrieve()
             .toEntity(Response::class.java)
 
-        if (response.statusCode != HttpStatusCode.valueOf(200)) {
+        if (response.statusCode != HttpStatus.OK)
             throw ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, response.body.toString())
-        }
 
         val body = response.body!!
         return Json.decodeFromString<List<String>>(body.getResponse())
