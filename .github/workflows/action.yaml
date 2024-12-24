@@ -13,11 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -26,8 +21,8 @@ jobs:
 
       - name: Build and tag Docker image with docker-compose
         run: |
-          docker-compose build --build-arg GEMINI_TOKEN=${{ secrets.GEMINI_TOKEN }}
-          docker tag ${{ secrets.DOCKER_USERNAME }}/dev-type-backend:latest ${{ secrets.DOCKER_USERNAME }}/dev-type-backend:latest
+          docker compose build --build-arg GEMINI_TOKEN=${{ secrets.GEMINI_TOKEN }}
+          docker tag ${{ secrets.DOCKER_USERNAME }}/dev-type ${{ secrets.DOCKER_USERNAME }}/dev-type:backend
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/dev-type-backend:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/dev-type:backend
