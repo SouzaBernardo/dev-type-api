@@ -4,4 +4,4 @@ services:
       context: .
     container_name: api
     environment:
-      - GEMINI_TOKEN=${{ secrets.GEMINI_TOKEN }}
+      - GEMINI_TOKEN=${GEMINI_TOKEN}
