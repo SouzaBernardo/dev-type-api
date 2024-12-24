@@ -2,6 +2,9 @@ services:
   api:
     build:
       context: .
+      args:
+        GEMINI_TOKEN: "${GEMINI_TOKEN}"
     container_name: api
+    image: beposs/dev-type:backend
     environment:
-      - GEMINI_TOKEN=${GEMINI_TOKEN}
+      - GEMINI_TOKEN="${GEMINI_TOKEN}"
