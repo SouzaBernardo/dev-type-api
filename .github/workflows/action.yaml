@@ -19,6 +19,9 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Set GEMINI_TOKEN environment variable
+        run: echo "GEMINI_TOKEN=${{ secrets.GEMINI_TOKEN }}" >> $GITHUB_ENV
+
       - name: Build and tag Docker image with docker-compose
         run: docker compose build
 
