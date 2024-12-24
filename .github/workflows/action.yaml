@@ -26,8 +26,8 @@ jobs:
 
       - name: Build and tag Docker image with docker-compose
         run: |
-          docker-compose build
-          docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/dev-type:backend ${{ secrets.DOCKER_USERNAME }}/dev-type:backend:latest
+          docker-compose build --build-arg GEMINI_TOKEN=${{ secrets.GEMINI_TOKEN }}
+          docker tag ${{ secrets.DOCKER_USERNAME }}/dev-type-backend:latest ${{ secrets.DOCKER_USERNAME }}/dev-type-backend:latest
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/dev-type:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/dev-type-backend:latest
