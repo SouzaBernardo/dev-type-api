@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,11 +19,23 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Set GEMINI_TOKEN environment variable
-        run: echo "GEMINI_TOKEN=${{ secrets.GEMINI_TOKEN }}" >> $GITHUB_ENV
-
       - name: Build and tag Docker image with docker-compose
         run: docker compose build
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/dev-type:backend
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Pull image
+        run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/dev-type:backend
+
+      - name: Run container
+        run: docker run -d -p 8080:8080 -e GEMINI_TOKEN=${{ secrets.GEMINI_TOKEN }} --name back_end_dev_type ${{ secrets.DOCKER_HUB_USERNAME }}/dev-type:backend
